@@ -112,10 +112,26 @@ addcompany= async() =>{
   console.log( "NAME" + name );   // john.doe
   console.log( "DOMAIN" + domain );
   console.log( "COMPANY" + company + user.uid );
+
+
+this.setState({d: new Date(Date.now())});
+Date.prototype.addHours= function(h){
+    this.setHours(this.getHours()+h);
+    return this;
+}
+this.setState({deliveryd: new Date().addHours(6)});
+const deliveryhour = this.state.deliveryd.getHours();
+this.setState({openingd: new Date().addHours(24-this.state.d.getHours()+9)});
+
+
+
+
   this.setState({company: company})
       //const response = await firebase.database().ref('Recipe Ingredients').child(user).child(recipe + " " + key )
       //.set({Name: item, Buy: true, Created: firebase.database.ServerValue.TIMESTAMP})
-      const responsecompany = await firebase.database().ref('companies').child(user.uid).set({email: this.state.email, uid: user.uid, company: this.state.company})
+      const responsecompany = await firebase.database().ref('companies').child(user.uid).set({email: this.state.email, uid: user.uid, key: user.uid, company: this.state.company})
+      const schedulecompany = await firebase.database().ref('Schedule').child(user.uid).set({time: this.state.deliveryd})
+
       const check = await firebase.database().ref().child("companies").orderByChild("company").equalTo("gmail").once("value",snapshot => {
           if (snapshot.exists()){
             const userData = snapshot.val();

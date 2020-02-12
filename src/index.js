@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import Counter from './components/counter'
-import User from './components/user'
+import Counter from './counter'
+import User from './user'
+import PropTypes from 'prop-types';
+import {Provider} from 'react-redux';
+import store from './redux/store';
 import {
   BrowserRouter as Router,
   Route,
@@ -11,6 +14,9 @@ import {
 } from 'react-router-dom'
 
 const routing = (
+  <Provider store = {store}>
+
+
   <Router>
     <div>
     <ul>
@@ -33,6 +39,7 @@ const routing = (
 
     </div>
   </Router>
+  </Provider>
 )
 ReactDOM.render(routing, document.getElementById('root'))
 
